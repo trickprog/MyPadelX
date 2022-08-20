@@ -5,7 +5,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import NewReleasesIcon from "@mui/icons-material/NewReleases";
 import LogoutIcon from "@mui/icons-material/Logout";
-
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 export default function Navbar() {
   return (
     <>
@@ -55,6 +55,17 @@ export default function Navbar() {
                   }}
                 >
                   <NewReleasesIcon className="mr-2" /> New Activity
+                </li>
+              </a>
+              <a href="/Booking" className="flex space-x-4 space-y-7">
+                <li
+                  style={{
+                    fontSize: 17,
+                    marginBottom: 23,
+                  }}
+                >
+                  <BookmarkAddIcon className="mr-2" />
+                  Bookings
                 </li>
               </a>
               <a href="/Settings" className="flex space-x-4 space-y-7">

@@ -6,12 +6,13 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import NewReleasesIcon from "@mui/icons-material/NewReleases";
 import LogoutIcon from "@mui/icons-material/Logout";
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import ScoreboardIcon from '@mui/icons-material/Scoreboard';
 export default function Navbar() {
   return (
     <>
       <div className="flex flex-col items-center md:items-start bg-blue-700 font-Poppins ">
         <div className="  w-[300px]   h-screen">
-          <div className="ml-10 text-white mt-10 mb-7 text-2xl mb-20">
+          <div className="ml-10 text-white mt-10  text-2xl mb-20">
             <h1 style={{ marginTop: 80 }}>My PadelX Panel</h1>
           </div>
 
@@ -66,6 +67,17 @@ export default function Navbar() {
                 >
                   <BookmarkAddIcon className="mr-2" />
                   Bookings
+                </li>
+              </a>
+              <a href="/Scoreboard" className="flex space-x-4 space-y-7">
+                <li
+                  style={{
+                    fontSize: 17,
+                    marginBottom: 23,
+                  }}
+                >
+                  <ScoreboardIcon className="mr-2" />
+                  Scoreboard
                 </li>
               </a>
               <a href="/Settings" className="flex space-x-4 space-y-7">

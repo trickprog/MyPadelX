@@ -6,7 +6,6 @@ export default function Matchs() {
     return (
         <div className=' m-5 font-Poppins'>
             
-            <RequestMatchs />
             <ApprovedMatchs />
         </div>
     )

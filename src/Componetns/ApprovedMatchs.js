@@ -1,244 +1,79 @@
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
+import MatchAddForm from "./MatchAddForm";
 export default function ApprovedMatchs() {
   const Playersdata = [
     {
       id: 1,
-      player1: "Phineas",
-      player2: "Franciottoi",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 1,
-      Nationality: "Pakistan",
+      Match: 1,
+      player1Name: "Phineas",
+      player2Name: "Franciottoi",
+      player3Name: "Mikel",
+      player4Name: "Gregoli",
+      p1img: 1,
+      p2img: 2,
+      p3img: 3,
+      p4img: 4,
       Time: "July 10 2022 10:30 PM",
+      courtName: "Court Jing’an Shanghai",
     },
     {
       id: 2,
-      player1: "Mikel",
-      player2: "Gregoli",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 2,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
+      Match: 2,
+      player1Name: "Phineas",
+      player2Name: "Mikel",
+      player3Name: "Franciottoi",
+      player4Name: "Gregoli",
+      p1img: 1,
+      p2img: 3,
+      p3img: 2,
+      p4img: 4,
+      Time: "July 20 2022 4:30 PM",
+      courtName: "Court Jing’an Shanghai",
     },
     {
-      id: 3,
-      player1: "Moira",
-      player2: "Mazzilli",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 3,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 4,
-      player1: "Kaja",
-      player2: "True",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 2,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 5,
-      player1: "Robbie",
-      player2: "Mc Harg",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 1,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 6,
-      player1: "Niki",
-      player2: "Daber",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 3,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 7,
-      player1: "Rana",
-      player2: "Gyrgorwicx",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 4,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 8,
-      player1: "Johnette",
-      player2: "Torricella",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 2,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 9,
-      player1: "Kristoforo",
-      player2: "Slinn",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 5,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 10,
-      player1: "Wye",
-      player2: "Bushrod",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 4,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 11,
-      player1: "Aline",
-      player2: "Boydle",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 2,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 12,
-      player1: "Dall",
-      player2: "Ettritch",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 5,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 13,
-      player1: "Wynn",
-      player2: "Vautier",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 4,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 14,
-      player1: "Cami",
-      player2: "Pfaffe",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 1,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 15,
-      player1: "Althea",
-      player2: "Wenzel",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 5,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 16,
-      player1: "Charlotte",
-      player2: "McAvey",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 4,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 17,
-      player1: "Nickolas",
-      player2: "Swift",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 2,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 18,
-      player1: "Cybill",
-      player2: "Coward",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 5,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 19,
-      player1: "Chauncey",
-      player2: "Patey",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 4,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 20,
-      player1: "Gregorius",
-      player2: "Petch",
-      Matchs: 10,
-      Ranking: 10,
-      Wins: 5,
-      img: 1,
-      Nationality: "Pakistan",
-      Time: "July 10 2022 10:30 PM",
+      id: 2,
+      Match: 3,
+      player1Name: "Gregoli",
+      player2Name: "Mikel",
+      player3Name: "Franciottoi",
+      player4Name: "Phineas",
+      p1img: 4,
+      p2img: 3,
+      p3img: 2,
+      p4img: 1,
+      Time: "July 21 2022 11:30 AM",
+      courtName: "Court Jing’an Shanghai",
     },
   ];
 
-  const [users, setUsers] = useState(Playersdata.slice(0, 100));
+  const [users, setUsers] = useState(Playersdata.slice(0, 3));
   const [pageNumber, setPageNumber] = useState(0);
 
-  const usersPerPage = 5;
+  const usersPerPage = 3;
   const pagesVisited = pageNumber * usersPerPage;
 
   const pageCount = Math.ceil(users.length / usersPerPage);
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
+
+  const [open, setopen] = useState(false);
   return (
     <>
       <div>
-        <div className=" text-black m-5 text-3xl  mt-10">
-          <h1 style={{ marginBottom: 50 }}>Matchs Approved</h1>
+        <div className=" text-black m-5 text-3xl  mt-10 flex justify-between items-center">
+          <h1 style={{ marginBottom: 50 }}>Matchs</h1>
+          <div>
+            <button
+              type="button"
+              class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 "
+              onClick={() => setopen(true)}
+            >
+              Add +
+            </button>
+            {open && <MatchAddForm close={setopen} />}
+          </div>
         </div>
 
         <table
@@ -247,57 +82,86 @@ export default function ApprovedMatchs() {
         >
           <thead class="text-base text-white uppercase  ">
             <tr>
-              <th scope="col" class="text-center py-3 px-6">
-                Team
+              <th scope="col" colspan="3" class="text-center py-3 px-6">
+                Match
               </th>
               <th scope="col" class="py-3 px-6">
                 Time
               </th>
               <th scope="col" class="py-3 px-6">
-                Code Name
+                Court Name
               </th>
             </tr>
           </thead>
           {Playersdata.slice(pagesVisited, pagesVisited + usersPerPage).map(
             (val, id) => (
-              <tbody key={id}>
-                <tr class="bg-white border-b text-black">
-                  <th scope="row" class="flex  py-4 px-6 text-black ">
-                    <td>
-                      <div className="flex">
+              <tbody key={id} >
+                <tr class="bg-white border-b text-black ">
+                  <td >
+                    {/* player1 info */}
+                    <div className="m-2">
+                      <div className="flex justify-center">
                         <img
-                          class="w-10 h-10 rounded-full"
-                          src={require("./profile/img" + val.img + ".png")}
+                          class="w-10 h-10 rounded-full "
+                          src={require("./profile/img" + val.p1img + ".png")}
                           alt="Jese image"
                         />
-                        <div class="pl-3">
-                          <div class="text-base font-semibold">
-                            {val.player1}
-                          </div>
-                        </div>
                       </div>
-                    </td>
-                    <td className="mx-auto">
-                      <div class="text-base font-semibold mx-5">VS</div>
-                    </td>
-                    <td>
-                      <div className="flex">
+                      <div class="text-base text-center font-semibold">
+                        {val.player1Name}
+                      </div>
+                    </div>
+                    {/* player2 info */}
+                    <div className="mt-2">
+                      <div className="flex justify-center">
                         <img
-                          class="w-10 h-10 rounded-full"
-                          src={require("./profile/img" + val.img + ".png")}
+                          class="w-10 h-10 rounded-full "
+                          src={require("./profile/img" + val.p2img + ".png")}
                           alt="Jese image"
                         />
-                        <div class="pl-3">
-                          <div class="text-base font-semibold">
-                            {val.player2}
-                          </div>
-                        </div>
                       </div>
-                    </td>
-                  </th>
+                      <div class="text-base text-center font-semibold">
+                        {val.player2Name}
+                      </div>
+                    </div>
+                  </td>
+                  <td className="mt-10 flex flex-col items-center">
+                    <div class="text-base font-semibold  ">
+                      Match {val.Match}
+                    </div>
+                    <div class="text-base font-semibold my-auto">VS</div>
+                  </td>
+                  <td>
+                    {/* player3 info */}
+                    <div className="">
+                      <div className="flex justify-center">
+                        <img
+                          class="w-10 h-10 rounded-full "
+                          src={require("./profile/img" + val.p3img + ".png")}
+                          alt="Jese image"
+                        />
+                      </div>
+                      <div class="text-base text-center font-semibold">
+                        {val.player3Name}
+                      </div>
+                    </div>
+                    {/* player4 info */}
+                    <div className="mt-2">
+                      <div className="flex justify-center">
+                        <img
+                          class="w-10 h-10 rounded-full "
+                          src={require("./profile/img" + val.p4img + ".png")}
+                          alt="Jese image"
+                        />
+                      </div>
+                      <div class="text-base text-center font-semibold">
+                        {val.player4Name}
+                      </div>
+                    </div>
+                  </td>
                   <td class="py-4 px-6">{val.Time}</td>
                   <td class="  py-4 px-6">
-                    <div class="text-base font-semibold">{val.id}</div>
+                    <div class="text-base font-semibold">{val.courtName}</div>
                   </td>
                 </tr>
               </tbody>

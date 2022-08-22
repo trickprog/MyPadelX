@@ -11,6 +11,7 @@ export default function MatchTbody(props) {
             class="flex  py-4 px-4 text-black cursor-pointer"
             onClick={() => setopen(true)}
           >
+            <tr>
             <td>
               <div className="flex">
                 <img
@@ -23,6 +24,7 @@ export default function MatchTbody(props) {
                 </div>
               </div>
             </td>
+            </tr>
             <td className="mx-auto">
               <div class="text-base font-semibold mx-5">VS</div>
             </td>

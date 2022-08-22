@@ -6,6 +6,7 @@ import Setting from "./Componetns/Setting";
 import Dashboard from "./Componetns/Dashboard";
 import NewActivity from "./Componetns/NewActivity";
 import Bookings from "./Componetns/Bookings";
+import Scoreboard from "./Componetns/Scoreboard";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
               <Route exact path="/Users" element={<User />} />
               <Route exact path="/Matchs" element={<Matchs />} />
               <Route exact path="/NewActivity" element={<NewActivity />} />
+              <Route exact path="/Scoreboard" element={<Scoreboard />} />
               <Route exact path="/Booking" element={<Bookings />} />
               <Route exact path="/Settings" element={<Setting />} />
             </Routes>

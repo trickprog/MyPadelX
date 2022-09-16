@@ -1,23 +1,37 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import JsonData from "../MOCK_DATA.json";
 import ReactPaginate from "react-paginate";
 import "./Pagination.css";
 import UserTbody from "./UserTbody";
-
+import {Api} from '../Api'
+import axios from "axios";
 export default function User() {
-  const [users, setUsers] = useState(JsonData.slice(0, 100));
+  const [users, setUsers] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
 
-  const usersPerPage = 10;
+  const usersPerPage = 4;
   const pagesVisited = pageNumber * usersPerPage;
 
   const pageCount = Math.ceil(users.length / usersPerPage);
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
+  const userData = () => {
+    axios
+      .get(`${Api}/Users`)
+      .then((res) => {
+        setUsers(res.data)
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+  useEffect(() => {
+    userData();
+  }, []);
   return (
     <>
-      <div class="m-10 font-Poppins">
+      <div class="m-10 font-Poppins w-full">
         <div className=" text-black m-5 text-3xl  mt-10">
           <h1 style={{ marginBottom: 50 }}>Users</h1>
         </div>
@@ -43,14 +57,14 @@ export default function User() {
           </thead>
           {users
             .slice(pagesVisited, pagesVisited + usersPerPage)
-            .map((val, id) => {
+            .map((val, ind) => {
               return (
                 <UserTbody
-                  key={id}
-                  firstName={val.firstName}
-                  lastName={val.lastName}
+                  key={ind} 
+                  fullname={val.fullname}
                   email={val.email}
-                  password={val.password}
+                  uid={val.UserId}
+                  img={val.imageUrl}
                 />
               );
             })}

@@ -1,13 +1,52 @@
 import React, { useState } from "react";
-
+import axios from "axios";
+import {Api} from '../Api'
 export default function BookingTBody(props) {
   const [open, setopen] = useState(false);
+  const [court, setcourt] = useState("");
+  const [time, settime] = useState("");
+  const deleteBooking = (uid) => {
+    console.log(uid);
+    axios
+      .delete(`${Api}/MatchBooking/${uid}`, {
+        headers: { Authorization: `Bearer ${localStorage.FbIdToken}` },
+      })
+      .then((res) => {
+        console.log(res.data);
+        alert(res.data);
+        window.location.reload(true);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const updateuser = (uid) => {
+    console.log(uid);
+
+    const bookingData = {
+      courtName: court,
+      timing: time,
+    };
+    
+    axios
+      .post(`${Api}/MatchBooking/${uid}`,bookingData,{headers:{'Authorization':`Bearer ${localStorage.FbIdToken}`}})
+      .then((res) => {
+        console.log(res.data);
+        alert(res.data)
+        window.location.reload(true)
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   return (
     <>
       <tbody>
         <tr class="bg-white border-b text-black">
           <th scope="row" class="py-4 px-6 font-medium ">
-            {props.BookedBy} 
+            {props.BookedBy}
           </th>
           <td class="py-4 px-6">{props.email}</td>
           <td class="py-4 px-6">{props.CourtName}</td>
@@ -19,7 +58,13 @@ export default function BookingTBody(props) {
             >
               Edit
             </a>
-            <a class="font-medium text-blue-700 m-1 hover:underline">Delete</a>
+            <button
+              value={props.bookID}
+              onClick={(e) => deleteBooking(e.target.value)}
+              class="font-medium text-blue-700 m-1 hover:underline"
+            >
+              Delete
+            </button>
           </td>
         </tr>
       </tbody>
@@ -85,21 +130,27 @@ export default function BookingTBody(props) {
                       type="text"
                       className="bg-white outline-none border border-black focus:ring-4 focus:ring-black placeholder:text-black text-sm rounded-lg block w-full p-2.5"
                       placeholder="Court Name"
-                      value={props.CourtName}
+                      value={court}
+                      onChange={(e)=>setcourt(e.target.value)}
                     />
                   </div>
                   <div>
                     <input
-                      type="text"
+                      type="datetime-local"
                       className="bg-white  outline-none border border-black focus:ring-4 focus:ring-black  placeholder:text-black text-sm rounded-lg block w-full p-2.5"
                       placeholder="Time "
-                      value={props.time}
+                      value={time}
+                      onChange={(e)=>settime(e.target.value)}
+
+
                     />
                   </div>
                   <div></div>
 
                   <div className="flex justify-around">
                     <button
+                      value={props.bookID}
+                      onClick={(e) => updateuser(e.target.value)}
                       type="button"
                       class="text-white bg-blue-700  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
                     >

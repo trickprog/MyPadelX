@@ -1,6 +1,65 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import {Api} from '../Api'
+export default function MatchAddForm({ close }) {
+  const [users, setUsers] = useState([]);
+  const [p1, setp1] = useState("");
+  const [p2, setp2] = useState("");
+  const [p3, setp3] = useState("");
+  const [p4, setp4] = useState("");
+  const [match, setmatch] = useState("");
+  const [time, settime] = useState("");
+  const [courtName, setcourtName] = useState("");
+  const MatchBooking = (e) => {
+    e.preventDefault();
+    let p1img = users.find((doc) => doc.UserId === p1).imageUrl;
+    let p1name = users.find((doc) => doc.UserId === p1).fullname;
+    let p2img = users.find((doc) => doc.UserId === p2).imageUrl;
+    let p2name = users.find((doc) => doc.UserId === p2).fullname;
+    let p3img = users.find((doc) => doc.UserId === p3).imageUrl;
+    let p3name = users.find((doc) => doc.UserId === p3).fullname;
+    let p4img = users.find((doc) => doc.UserId === p4).imageUrl;
+    let p4name = users.find((doc) => doc.UserId === p4).fullname;
+    const Setbookingdata = {
+      player1: p1name,
+      player2: p2name,
+      player3: p3name,
+      player4: p4name,
+      Poneimg:p1img,
+      Ptwoimg:p2img,
+      Pthreeimg:p3img,
+      Pfourimg:p4img,
+      courtName: courtName,
+      timing: time,
+      match:match,
+    };
+    axios
+      .post(`${Api}/MatchBooking`, Setbookingdata, {
+        headers: { Authorization: `Bearer ${localStorage.FbIdToken}` },
+      })
+      .then((res) => {
+        alert("Match is Booked");
+        window.location.reload(true);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
-export default function MatchAddForm({close}) {
+  const userData = () => {
+    axios
+      .get(`${Api}/Users`)
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+  useEffect(() => {
+    userData();
+  }, []);
+
   return (
     <>
       <div
@@ -39,62 +98,70 @@ export default function MatchAddForm({close}) {
                 className="mb-4 text-xl font-medium  "
                 style={{ marginBottom: 30 }}
               >
-                Add Match 
+                Add Match
               </h3>
               <form className="space-y-6" action="#">
-                <div className="flex gap-3">
-                  <input
-                    type="text"
-                    className="bg-white outline-none border border-black focus:ring-4 focus:ring-black placeholder:text-black text-sm rounded-lg block w-full p-2.5"
-                    placeholder="Player 1 Name"
-                  /><input
-                  type="file"
-                  className="bg-white outline-none border border-black focus:ring-4 focus:ring-black placeholder:text-black text-sm rounded-lg block w-full p-2.5"
-                  placeholder="Player Picture"
-                />
+                <div className="flex">
+                  <select
+                    value={p1}
+                    onChange={(e) => setp1(e.target.value)}
+                    class="bg-white  outline-none border border-black focus:ring-4 focus:ring-black  placeholder:text-black text-sm rounded-lg block w-full p-2.5"
+                  >
+                    <option selected>Choose Player 1</option>
+                    {users.map((val, ind) => (
+                      <option  value={val.UserId} key={ind}>{val.fullname}</option>
+                    ))}
+                  </select>
+                  <select
+                    value={p2}
+                    onChange={(e) => setp2(e.target.value)}
+                    class="bg-white  outline-none border border-black focus:ring-4 focus:ring-black  placeholder:text-black text-sm rounded-lg block w-full p-2.5"
+                  >
+                    <option selected>Choose Player 2</option>
+                    {users.map((val, ind) => (
+                      <option key={ind} value={val.UserId}>{val.fullname}</option>
+                    ))}
+                  </select>
                 </div>
-                <div className="flex gap-3">
-                  <input
-                    type="text"
-                    className="bg-white outline-none border border-black focus:ring-4 focus:ring-black placeholder:text-black text-sm rounded-lg block w-full p-2.5"
-                    placeholder="Player 2 Name"
-                  /><input
-                  type="file"
-                  className="bg-white outline-none border border-black focus:ring-4 focus:ring-black placeholder:text-black text-sm rounded-lg block w-full p-2.5"
-                  placeholder="Player Picture"
-                />
-                </div>
-                <div className="flex gap-3">
-                  <input
-                    type="text"
-                    className="bg-white outline-none border border-black focus:ring-4 focus:ring-black placeholder:text-black text-sm rounded-lg block w-full p-2.5"
-                    placeholder="Player 3 Name"
-                  /><input
-                  type="file"
-                  className="bg-white outline-none border border-black focus:ring-4 focus:ring-black placeholder:text-black text-sm rounded-lg block w-full p-2.5"
-                  placeholder="Player Picture"
-                />
-                </div>
-                <div className="flex gap-3">
-                  <input
-                    type="text"
-                    className="bg-white outline-none border border-black focus:ring-4 focus:ring-black placeholder:text-black text-sm rounded-lg block w-full p-2.5"
-                    placeholder="Player 4 Name"
-                  /><input
-                  type="file"
-                  className="bg-white outline-none border border-black focus:ring-4 focus:ring-black placeholder:text-black text-sm rounded-lg block w-full p-2.5"
-                  placeholder="Player Picture"
-                />
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    className="bg-white  outline-none border border-black focus:ring-4 focus:ring-black  placeholder:text-black text-sm rounded-lg block w-full p-2.5"
-                    placeholder="Email "
-                  />
+                <div className="flex">
+                  <select
+                    value={p3}
+                    onChange={(e) => setp3(e.target.value)}
+                    class="bg-white  outline-none border border-black focus:ring-4 focus:ring-black  placeholder:text-black text-sm rounded-lg block w-full p-2.5"
+                  >
+                    <option selected>Choose Player 3</option>
+                    {users.map((val, ind) => (
+                      <option key={ind} value={val.UserId}>{val.fullname}</option>
+                    ))}
+                  </select>
+                  <select
+                    value={p4}
+                    onChange={(e) => setp4(e.target.value)}
+                    class="bg-white  outline-none border border-black focus:ring-4 focus:ring-black  placeholder:text-black text-sm rounded-lg block w-full p-2.5"
+                  >
+                    <option selected>Choose Player 4</option>
+                    {users.map((val, ind) => (
+                      <option key={ind} value={val.UserId}>{val.fullname}</option>
+                    ))}
+                  </select>
                 </div>
                 <div>
+                  <select
+                    value={match}
+                    onChange={(e) => setmatch(e.target.value)}
+                    class="bg-white  outline-none border border-black focus:ring-4 focus:ring-black  placeholder:text-black text-sm rounded-lg block w-full p-2.5"
+                  >
+                    <option selected>Match To be Played </option>
+                    <option >1</option>
+                    <option >2</option>
+                    <option >3</option>
+                  </select>
+                </div>
+
+                <div>
                   <input
+                    value={courtName}
+                    onChange={(e) => setcourtName(e.target.value)}
                     type="text"
                     className="bg-white outline-none border border-black focus:ring-4 focus:ring-black placeholder:text-black text-sm rounded-lg block w-full p-2.5"
                     placeholder="Court Name"
@@ -102,6 +169,8 @@ export default function MatchAddForm({close}) {
                 </div>
                 <div>
                   <input
+                    value={time}
+                    onChange={(e) => settime(e.target.value)}
                     type="datetime-local"
                     className="bg-white  outline-none border border-black focus:ring-4 focus:ring-black  placeholder:text-black text-sm rounded-lg block w-full p-2.5"
                     placeholder="Time "
@@ -111,6 +180,7 @@ export default function MatchAddForm({close}) {
 
                 <div className="flex justify-around">
                   <button
+                    onClick={(e) => MatchBooking(e)}
                     type="button"
                     class="text-white bg-blue-700  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
                   >

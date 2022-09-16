@@ -1,54 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
+import axios from "axios";
+import {Api} from '../Api'
 import MatchAddForm from "./MatchAddForm";
 export default function ApprovedMatchs() {
-  const Playersdata = [
-    {
-      id: 1,
-      Match: 1,
-      player1Name: "Phineas",
-      player2Name: "Franciottoi",
-      player3Name: "Mikel",
-      player4Name: "Gregoli",
-      p1img: 1,
-      p2img: 2,
-      p3img: 3,
-      p4img: 4,
-      Time: "July 10 2022 10:30 PM",
-      courtName: "Court Jing’an Shanghai",
-    },
-    {
-      id: 2,
-      Match: 2,
-      player1Name: "Phineas",
-      player2Name: "Mikel",
-      player3Name: "Franciottoi",
-      player4Name: "Gregoli",
-      p1img: 1,
-      p2img: 3,
-      p3img: 2,
-      p4img: 4,
-      Time: "July 20 2022 4:30 PM",
-      courtName: "Court Jing’an Shanghai",
-    },
-    {
-      id: 2,
-      Match: 3,
-      player1Name: "Gregoli",
-      player2Name: "Mikel",
-      player3Name: "Franciottoi",
-      player4Name: "Phineas",
-      p1img: 4,
-      p2img: 3,
-      p3img: 2,
-      p4img: 1,
-      Time: "July 21 2022 11:30 AM",
-      courtName: "Court Jing’an Shanghai",
-    },
-  ];
-
-  const [users, setUsers] = useState(Playersdata.slice(0, 3));
+  const [users, setUsers] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
+  const [open, setopen] = useState(false);
 
   const usersPerPage = 3;
   const pagesVisited = pageNumber * usersPerPage;
@@ -57,8 +15,21 @@ export default function ApprovedMatchs() {
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
+  const booking = () => {
+    axios
+      .get(`${Api}/MatchBooking`)
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
-  const [open, setopen] = useState(false);
+  useEffect(() => {
+    booking();
+  }, []);
+
   return (
     <>
       <div>
@@ -93,41 +64,34 @@ export default function ApprovedMatchs() {
               </th>
             </tr>
           </thead>
-          {Playersdata.slice(pagesVisited, pagesVisited + usersPerPage).map(
-            (val, id) => (
-              <tbody key={id} >
+          {users
+            .slice(pagesVisited, pagesVisited + usersPerPage)
+            .map((val, id) => (
+              <tbody key={id}>
                 <tr class="bg-white border-b text-black ">
-                  <td >
+                  <td>
                     {/* player1 info */}
                     <div className="m-2">
                       <div className="flex justify-center">
-                        <img
-                          class="w-10 h-10 rounded-full "
-                          src={require("./profile/img" + val.p1img + ".png")}
-                          alt="Jese image"
-                        />
+                        <img class="w-10 h-10 rounded-full " src={val.Poneimg} alt="Jese image" />
                       </div>
                       <div class="text-base text-center font-semibold">
-                        {val.player1Name}
+                        {val.player1}
                       </div>
                     </div>
                     {/* player2 info */}
                     <div className="mt-2">
                       <div className="flex justify-center">
-                        <img
-                          class="w-10 h-10 rounded-full "
-                          src={require("./profile/img" + val.p2img + ".png")}
-                          alt="Jese image"
-                        />
+                        <img class="w-10 h-10 rounded-full " src={val.Ptwoimg} alt="Jese image" />
                       </div>
                       <div class="text-base text-center font-semibold">
-                        {val.player2Name}
+                        {val.player2}
                       </div>
                     </div>
                   </td>
                   <td className="mt-10 flex flex-col items-center">
                     <div class="text-base font-semibold  ">
-                      Match {val.Match}
+                      Match {val.match}
                     </div>
                     <div class="text-base font-semibold my-auto">VS</div>
                   </td>
@@ -135,38 +99,29 @@ export default function ApprovedMatchs() {
                     {/* player3 info */}
                     <div className="">
                       <div className="flex justify-center">
-                        <img
-                          class="w-10 h-10 rounded-full "
-                          src={require("./profile/img" + val.p3img + ".png")}
-                          alt="Jese image"
-                        />
+                        <img class="w-10 h-10 rounded-full " src={val.Pthreeimg} alt="Jese image" />
                       </div>
                       <div class="text-base text-center font-semibold">
-                        {val.player3Name}
+                        {val.player3}
                       </div>
                     </div>
                     {/* player4 info */}
                     <div className="mt-2">
                       <div className="flex justify-center">
-                        <img
-                          class="w-10 h-10 rounded-full "
-                          src={require("./profile/img" + val.p4img + ".png")}
-                          alt="Jese image"
-                        />
+                        <img class="w-10 h-10 rounded-full " src={val.Pfourimg}  alt="Jese image" />
                       </div>
                       <div class="text-base text-center font-semibold">
-                        {val.player4Name}
+                        {val.player4}
                       </div>
                     </div>
                   </td>
-                  <td class="py-4 px-6">{val.Time}</td>
+                  <td class="py-4 px-6">{val.timing}</td>
                   <td class="  py-4 px-6">
                     <div class="text-base font-semibold">{val.courtName}</div>
                   </td>
                 </tr>
               </tbody>
-            )
-          )}
+            ))}
         </table>
         <ReactPaginate
           breakLabel="..."

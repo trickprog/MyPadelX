@@ -1,69 +1,13 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import "./Pagination.css";
 import BookingTBody from "./BookingTBody";
+import axios from "axios";
+import {Api} from '../Api'
 import BookingAddForm from "./BookingAddForm";
 export default function Bookings() {
-  const BookingData = [
-    {
-      id: 1,
-      BookedBy: "Phineas",
-      email: "pfranciottoi0@hostgator.com",
-      CourtName: "Court Jing’an Shanghai",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 2,
-      BookedBy: "Phineas",
-      email: "pfranciottoi0@hostgator.com",
-      CourtName: "Court Jing’an Shanghai",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 3,
-      BookedBy: "Phineas",
-      email: "pfranciottoi0@hostgator.com",
-      CourtName: "Court Jing’an Shanghai",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 4,
-      BookedBy: "Phineas",
-      email: "pfranciottoi0@hostgator.com",
-      CourtName: "Court Jing’an Shanghai",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 5,
-      BookedBy: "Phineas",
-      email: "pfranciottoi0@hostgator.com",
-      CourtName: "Court Jing’an Shanghai",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 6,
-      BookedBy: "Phineas",
-      email: "pfranciottoi0@hostgator.com",
-      CourtName: "Court Jing’an Shanghai",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 7,
-      BookedBy: "Phineas",
-      email: "pfranciottoi0@hostgator.com",
-      CourtName: "Court Jing’an Shanghai",
-      Time: "July 10 2022 10:30 PM",
-    },
-    {
-      id: 8,
-      BookedBy: "Phineas",
-      email: "pfranciottoi0@hostgator.com",
-      CourtName: "Court Jing’an Shanghai",
-      Time: "July 10 2022 10:30 PM",
-    },
-  ];
 
-  const [users, setUsers] = useState(BookingData.slice(0, 100));
+  const [users, setUsers] = useState([])
   const [pageNumber, setPageNumber] = useState(0);
 
   const usersPerPage = 5;
@@ -73,23 +17,30 @@ export default function Bookings() {
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
+  
 
-  const [open, setopen] = useState(false);
+  const booking = () => {
+    axios
+      .get(`${Api}/MatchBooking`)
+      .then((res) => {
+        console.log("Getting Matchs ");
+        console.log(res.data);
+        setUsers(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    booking();
+  }, []);
+
   return (
     <>
-      <div class="m-10 font-Poppins">
+      <div class="m-10 font-Poppins w-full">
         <div className=" text-black m-5 text-3xl  mt-10 flex justify-between items-center">
           <h1 style={{ marginBottom: 50 }}>Bookings</h1>
-          <div>
-            <button
-              type="button"
-              class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 "
-              onClick={() => setopen(true)}
-            >
-              Add +
-            </button>
-            {open && <BookingAddForm close={setopen} />}
-          </div>
         </div>
         <table
           class="w-full text-sm text-left bg-blue-700"
@@ -120,9 +71,10 @@ export default function Bookings() {
               return (
                 <BookingTBody
                   key={id}
-                  BookedBy={val.BookedBy}
-                  CourtName={val.CourtName}
-                  time={val.Time}
+                  bookID={val.bookingid}
+                  BookedBy={val.bookedBy}
+                  CourtName={val.courtName}
+                  time={val.timing}
                   email={val.email}
                 />
               );

@@ -1,16 +1,56 @@
 import React, { useState } from "react";
-
+import axios from "axios";
+import {Api} from '../Api'
 export default function UserTbody(props) {
   const [open, setopen] = useState(false);
+  const [Fullname, setFullname] = useState('');
+
+
+
+  const deleteUser = (uid) => {
+    axios
+      .delete(`${Api}/Users/${uid}`,{headers:{'Authorization':`Bearer ${localStorage.FbIdToken}`}})
+      .then((res) => {
+        alert(res.data)
+        window.location.reload(true)
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  
+  };
+
+  const updateuser = (uid) => {
+
+
+    const userdata={
+      fullname:Fullname
+    }
+    axios
+      .post(`${Api}/Users/${uid}`,userdata,{headers:{'Authorization':`Bearer ${localStorage.FbIdToken}`}})
+      .then((res) => {
+        alert(res.data)
+        window.location.reload(true)
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  
+  };
   return (
     <>
       <tbody>
         <tr class="bg-white border-b text-black">
-          <th scope="row" class="py-4 px-6 font-medium ">
-            {props.firstName} {props.lastName}
+          <th scope="row" class="py-4 px-5 font-medium flex items-center">
+            <img
+              class="w-10 h-10 rounded-full mx-4"
+              src={props.img}
+              alt="player"
+            />
+            {props.fullname}
           </th>
           <td class="py-4 px-6">{props.email}</td>
-          <td class="py-4 px-6">{props.password}</td>
+          <td class="py-4 px-6">{props.uid}</td>
           <td class="py-4 px-6">
             <a
               onClick={() => setopen(true)}
@@ -18,7 +58,9 @@ export default function UserTbody(props) {
             >
               Edit
             </a>
-            <a class="font-medium text-blue-700 m-1 hover:underline">Delete</a>
+            <button  value={props.uid} onClick={(e) => deleteUser(e.target.value)}class="font-medium text-blue-700 m-1 hover:underline">
+              Delete
+            </button>
           </td>
         </tr>
       </tbody>
@@ -68,15 +110,8 @@ export default function UserTbody(props) {
                       type="text"
                       className="bg-white outline-none border border-black focus:ring-4 focus:ring-black placeholder:text-black text-sm rounded-lg block w-full p-2.5"
                       placeholder="First Name"
-                      value={props.firstName}
-                    />
-                  </div>
-                  <div>
-                    <input
-                      type="text"
-                      className="bg-white outline-none border border-black focus:ring-4 focus:ring-black placeholder:text-black text-sm rounded-lg block w-full p-2.5"
-                      placeholder="Last Name"
-                      value={props.lastName}
+                      value={Fullname}
+                      onChange={(e) => setFullname(e.target.value)}
                     />
                   </div>
                   <div>
@@ -89,16 +124,18 @@ export default function UserTbody(props) {
                   </div>
                   <div>
                     <input
-                      type="text"
+                      type="password"
                       className="bg-white  outline-none border border-black focus:ring-4 focus:ring-black  placeholder:text-black text-sm rounded-lg block w-full p-2.5"
-                      placeholder="Code Name "
-                      value={props.password}
+                      placeholder="Password "
+                      value={props.uid}
                     />
                   </div>
                   <div></div>
 
                   <div className="flex justify-around">
                     <button
+                    value={props.uid} 
+                    onClick={(e) => updateuser(e.target.value)}
                       type="button"
                       class="text-white bg-blue-700  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
                     >

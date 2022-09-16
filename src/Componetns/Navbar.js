@@ -8,6 +8,10 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import ScoreboardIcon from '@mui/icons-material/Scoreboard';
 export default function Navbar() {
+  const onClickhandle = () =>{
+    localStorage.clear();
+    window.location.href = "/Login";
+  }
   return (
     <>
       <div className="flex flex-col items-center md:items-start bg-blue-700 font-Poppins ">
@@ -91,7 +95,7 @@ export default function Navbar() {
                   Settings
                 </li>
               </a>
-              <a href="/" className="flex space-x-4 space-y-7">
+              <a  onClick={onClickhandle} className="flex space-x-4 space-y-7 cursor-pointer">
                 <li
                   style={{
                     fontSize: 17,

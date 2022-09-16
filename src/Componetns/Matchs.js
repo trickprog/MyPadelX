@@ -4,7 +4,7 @@ import RequestMatchs from './RequestMatchs'
 
 export default function Matchs() {
     return (
-        <div className=' m-5 font-Poppins'>
+        <div className=' m-5 font-Poppins w-full'>
             
             <ApprovedMatchs />
         </div>

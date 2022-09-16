@@ -1,49 +1,29 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
+import {Api} from '../Api'
 import Activityfeed from "./Activityfeed";
-
-const ActivityfeedData = [
-  {
-    id: 1,
-    Title: "Tennis Game",
-    describtion:
-      "Desciption Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-  },
-  {
-    id: 2,
-    Title: "Tennis Game",
-    describtion:
-      "Desciption Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-  },
-  {
-    id: 3,
-    Title: "Tennis Game",
-    describtion:
-      "Desciption Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-  },
-  {
-    id: 4,
-    Title: "Tennis Game",
-    describtion:
-      "Desciption Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-  },
-  {
-    id: 5,
-    Title: "Tennis Game",
-    describtion:
-      "Desciption Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-  },
-  {
-    id: 6,
-    Title: "Tennis Game",
-    describtion:
-      "Desciption Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-  },
-];
-
+import axios from "axios";
 export default function Dashboard() {
+
+  const [ActivityfeedData, setActivityfeedData] = useState([]);
+
+const Activity = () => {
+
+  axios.get( `${Api}/GetActivity`)
+  .then((res)=>{
+    setActivityfeedData(res.data)
+  })
+  .catch((err)=>{
+    console.log(err)
+  })
+}
+
+useEffect(() => {
+  Activity();
+}, []);
+  
   return (
     <>
-      <div className="font-Poppins">
+      <div className="font-Poppins w-full">
         <div className=" text-black m-5 text-3xl  mt-10">
           <h1 style={{ marginBottom: 50 }}>Dashboard</h1>
         </div>
@@ -52,8 +32,10 @@ export default function Dashboard() {
             return (
               <Activityfeed
                 key={ind}
-                Title={val.Title}
-                desc={val.describtion}
+                AID={val.activityID}
+                Title={val.title}
+                desc={val.describe}
+                img={val.imageUrl}
               />
             );
           })}

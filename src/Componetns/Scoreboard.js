@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import "./Pagination.css";
 import SocreBoardTbody from "./SocreBoardTbody";
 import AddScore from "./AddScore";
+import axios from "axios";
+import {Api} from '../Api'
 export default function Scoreboard() {
   const ScoreboardData = [
     {
@@ -80,21 +82,29 @@ export default function Scoreboard() {
   ]
 
 
-  const [users, setUsers] = useState(ScoreboardData.slice(0, 100));
-  const [pageNumber, setPageNumber] = useState(0);
-
-  const usersPerPage = 5;
-  const pagesVisited = pageNumber * usersPerPage;
-
-  const pageCount = Math.ceil(users.length / usersPerPage);
-  const changePage = ({ selected }) => {
-    setPageNumber(selected);
-  };
-
+  const [users, setUsers] = useState([]);
   const [open, setopen] = useState(false);
+
+
+  const PositionData = () => {
+    axios
+      .get(`${Api}/Positions`)
+      .then((res) => {
+        console.log(res.data);
+        setUsers(res.data)
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+  useEffect(() => {
+    PositionData();
+  }, []);
+
+
   return (
     <>
-      <div class="m-10 font-Poppins">
+      <div class="m-10 font-Poppins w-full">
         <div className=" text-black m-5 text-3xl  mt-10 flex justify-between items-center">
           <h1 style={{ marginBottom: 50 }}>Scoreboard</h1>
           <div>
@@ -108,6 +118,7 @@ export default function Scoreboard() {
             {open && <AddScore close={setopen} />}
           </div>
         </div>
+        <div className="overflow-y-scroll max-h-96">
         <table
           class="w-full text-sm text-left bg-blue-700"
           style={{ marginBottom: 50 }}
@@ -129,33 +140,21 @@ export default function Scoreboard() {
             </tr>
           </thead>
           {users
-            .slice(pagesVisited, pagesVisited + usersPerPage)
-            .map((val, id) => {
+            .map((val, index) => {
               return (
                 <SocreBoardTbody
-                  key={id}
-                  Position={val.Position}
-                  playerName={val.playerName}
-                  pimg={val.pimg}
-                  SPF={val.SPF}
-                  SPP={val.SPP}
-                  SPL={val.SPL}
+                  key={index}
+                  index={index}
+                  playerName={val.fullname}
+                  pimg={val.imageUrl}
+                  SPF={val.spf}
+                  SPP={val.spp}
+                  SPL={val.spl}
                 />
               );
             })}
         </table>
-        <ReactPaginate
-          breakLabel="..."
-          previousLabel={"previous"}
-          nextLabel={"Next"}
-          pageCount={pageCount}
-          onPageChange={changePage}
-          containerClassName={"paginationBttns"}
-          previousLinkClassName={"previousBttn"}
-          nextLinkClassName={"nextBttn"}
-          disabledClassName={"paginationDisabled"}
-          activeClassName={"paginationActive"}
-        />
+        </div>
       </div>
     </>
   );

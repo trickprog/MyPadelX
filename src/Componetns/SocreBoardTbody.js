@@ -1,18 +1,20 @@
 import React from "react";
 export default function SocreBoardTbody(props) {
 
-
-const position=props.Position
+  
   return (
+    
     <>
+  
       <tbody>
-       <tr class={ position % 2 === 0 ? "bg-white  text-black":"bg-gray-200  text-black"}>
+        <tr class={props.index % 2 === 0 ? "bg-white  text-black":"bg-gray-200  text-black"}> 
+       {/* <tr> */}
           <td class="py-4 px-6 flex items-center  text-base text-center font-medium">
  
-           <div className="text-[24px]">{position}</div>
+           <div className="text-[24px]">{props.index+1}</div>
             <img
               class="w-10 h-10 rounded-full mx-4"
-              src={require("./profile/img" + props.pimg + ".png")}
+              src={props.pimg}
               alt="player"
             />
 
